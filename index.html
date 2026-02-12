@@ -3,61 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dudu ❤️ Bubu Valentine</title>
+<title>Dudu ❤️ Bubu</title>
 
 <style>
 body{
     margin:0;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     text-align:center;
-    background: linear-gradient(135deg,#ff6f91,#ff8fab);
+    background: linear-gradient(135deg,#ff6f91,#ff4f81,#d63384);
     color:white;
     overflow:hidden;
 }
 
 .container{
-    padding:40px 20px;
+    padding:60px 20px;
 }
 
 h1{
-    font-size:32px;
-    margin-bottom:10px;
+    font-size:38px;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow{
+    from{text-shadow:0 0 10px #fff;}
+    to{text-shadow:0 0 25px #ffd6e0;}
 }
 
 h2{
-    font-weight:500;
+    font-weight:400;
+    margin-top:10px;
 }
 
 button{
-    padding:12px 28px;
-    font-size:18px;
+    margin-top:30px;
+    padding:15px 40px;
+    font-size:20px;
     border:none;
-    border-radius:30px;
+    border-radius:40px;
     cursor:pointer;
-    margin:10px;
-    transition:0.3s;
-}
-
-.yes{
     background:white;
     color:#ff4f81;
     font-weight:bold;
-}
-
-.no{
-    background:#ff4f81;
-    color:white;
-    position:absolute;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    transition:0.3s;
 }
 
 button:hover{
     transform:scale(1.1);
 }
 
-#result{
+#surprise{
     display:none;
-    margin-top:30px;
-    animation:fadeIn 1.5s ease-in-out;
+    margin-top:40px;
+    animation:fadeIn 2s ease-in-out;
 }
 
 @keyframes fadeIn{
@@ -65,61 +63,82 @@ button:hover{
     to{opacity:1;}
 }
 
-img{
-    width:160px;
+.images{
+    margin-top:20px;
+}
+
+.images img{
+    width:150px;
+    border-radius:20px;
     margin:10px;
+    box-shadow:0 10px 20px rgba(0,0,0,0.3);
+    animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
 }
 
 .heart{
     position:fixed;
     bottom:-20px;
-    font-size:22px;
-    animation:float 5s linear infinite;
+    font-size:24px;
+    animation:float 6s linear infinite;
 }
 
 @keyframes float{
     from{transform:translateY(0);opacity:1;}
     to{transform:translateY(-110vh);opacity:0;}
 }
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
+}
 </style>
 </head>
 
 <body>
 
+<canvas id="fireworks"></canvas>
+
 <div class="container">
     <h1>Dudu ❤️ Bubu</h1>
     <h2>Bubu, Will You Be My Valentine? 💖</h2>
+    <button onclick="showLove()">YES 💕</button>
 
-    <button class="yes" onclick="showLove()">Yes 💕</button>
-    <button class="no" id="noBtn" onmouseover="moveNo()">No 😜</button>
+    <div id="surprise">
 
-    <div id="result">
-        <div>
-            <!-- Real Dudu Bubu images -->
-            <img src="https://i.imgur.com/8Km9tLL.png" alt="Dudu Bubu 1">
-            <img src="https://i.imgur.com/jQ9Z6rH.png" alt="Dudu Bubu 2">
+        <div class="images">
+            <img src="dudu.jpeg">
+            ❤️
+            <img src="bubu.jpeg">
         </div>
 
-        <p style="font-size:20px;line-height:1.6;">
+        <p style="font-size:22px;line-height:1.7; margin-top:30px;">
         Out of all the people in this world,<br>
         my heart chose you.<br>
         Not once. Not twice.<br>
         But every single day. 💖<br><br>
         Happy Valentine's Day, Bubu 🥰<br>
-        Love always, Dudu ❤️
+        Forever Yours,<br>
+        Dudu ❤️
         </p>
     </div>
 </div>
 
+<audio id="bgMusic" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b3f43.mp3?filename=romantic-ambient-110624.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 function showLove(){
-    document.getElementById("result").style.display="block";
-}
-
-function moveNo(){
-    var btn=document.getElementById("noBtn");
-    btn.style.top=Math.random()*80+"vh";
-    btn.style.left=Math.random()*80+"vw";
+    document.getElementById("surprise").style.display="block";
+    document.getElementById("bgMusic").play();
+    launchFireworks();
 }
 
 function createHeart(){
@@ -128,10 +147,25 @@ function createHeart(){
     heart.innerHTML="💖";
     heart.style.left=Math.random()*100+"vw";
     document.body.appendChild(heart);
-    setTimeout(()=>{heart.remove();},5000);
+    setTimeout(()=>{heart.remove();},6000);
 }
+setInterval(createHeart,500);
 
-setInterval(createHeart,800);
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+function launchFireworks(){
+    for(let i=0;i<150;i++){
+        let x=Math.random()*canvas.width;
+        let y=Math.random()*canvas.height/2;
+        ctx.beginPath();
+        ctx.arc(x,y,3,0,2*Math.PI);
+        ctx.fillStyle="white";
+        ctx.fill();
+    }
+}
 </script>
 
 </body>
