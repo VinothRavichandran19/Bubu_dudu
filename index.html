@@ -11,98 +11,46 @@ body{
     text-align:center;
     background: linear-gradient(135deg, #2b0a3d, #6a0572, #ff4f81);
     color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+    transition:opacity 1s ease;
 }
 
-.container{
-    padding:60px 20px;
-}
-
-h1{
-    font-size:36px;
+.fade-out{
+    opacity:0;
 }
 
 button{
-    margin-top:30px;
-    padding:15px 40px;
-    font-size:20px;
+    padding:20px 50px;
+    font-size:22px;
     border:none;
-    border-radius:40px;
+    border-radius:50px;
     background:white;
     color:#ff4f81;
     font-weight:bold;
-}
-
-#surprise{
-    display:none;
-    margin-top:40px;
-}
-
-.images img{
-    width:150px;
-    border-radius:20px;
-    margin:10px;
+    cursor:pointer;
 }
 </style>
 </head>
 
-<body>
+<body id="body">
 
-<div class="container">
+<div>
     <h1>Dudu ❤️ Bubu</h1>
     <h2>Bubu, Will You Be My Valentine? 💖</h2>
-
-    <button onclick="showLove()">YES 💕</button>
-
-    <div id="surprise">
-        <div class="images">
-            <img src="dudu.jpeg">
-            ❤️
-            <img src="bubu.jpeg">
-        </div>
-
-        <p style="font-size:20px; line-height:1.6;">
-        Out of all the people in this world,<br>
-        my heart chose you.<br>
-        Not once. Not twice.<br>
-        But every single day. 💖<br><br>
-        Happy Valentine's Day Bubu 🥰<br>
-        Forever Yours,<br>
-        Dudu ❤️
-        </p>
-    </div>
+    <br>
+    <button onclick="goToLove()">YES 💕</button>
 </div>
 
 <script>
-function showLove() {
-    document.getElementById("surprise").style.display = "block";
-    startFireworks();
-}
-
-function startFireworks(){
-    const canvas = document.createElement("canvas");
-    document.body.appendChild(canvas);
-
-    canvas.style.position = "fixed";
-    canvas.style.top = 0;
-    canvas.style.left = 0;
-    canvas.style.pointerEvents = "none";
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const ctx = canvas.getContext("2d");
-
-    for(let i=0;i<120;i++){
-        let x = Math.random()*canvas.width;
-        let y = Math.random()*canvas.height/2;
-        let size = Math.random()*4+2;
-
-        ctx.beginPath();
-        ctx.arc(x,y,size,0,2*Math.PI);
-        ctx.fillStyle = "rgba(255,255,255,0.7)";
-        ctx.fill();
-    }
-
-    setTimeout(()=>{canvas.remove();},1500);
+function goToLove(){
+    document.getElementById("body").classList.add("fade-out");
+    setTimeout(()=>{
+        window.location.href = "love.html";
+    },1000);
 }
 </script>
 
