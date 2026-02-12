@@ -75,6 +75,34 @@ button{
 <script>
 function showLove() {
     document.getElementById("surprise").style.display = "block";
+    startFireworks();
+}
+
+function startFireworks(){
+    const canvas = document.createElement("canvas");
+    document.body.appendChild(canvas);
+
+    canvas.style.position = "fixed";
+    canvas.style.top = 0;
+    canvas.style.left = 0;
+    canvas.style.pointerEvents = "none";
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const ctx = canvas.getContext("2d");
+
+    for(let i=0;i<120;i++){
+        let x = Math.random()*canvas.width;
+        let y = Math.random()*canvas.height/2;
+        let size = Math.random()*4+2;
+
+        ctx.beginPath();
+        ctx.arc(x,y,size,0,2*Math.PI);
+        ctx.fillStyle = "rgba(255,255,255,0.7)";
+        ctx.fill();
+    }
+
+    setTimeout(()=>{canvas.remove();},1500);
 }
 </script>
 
