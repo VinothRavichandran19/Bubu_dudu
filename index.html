@@ -15,23 +15,29 @@ body{
     overflow:hidden;
 }
 
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:0; /* Behind everything */
+    pointer-events:none;
+}
+
 .container{
+    position:relative;
+    z-index:2;
     padding:60px 20px;
 }
 
 h1{
     font-size:38px;
-    animation: glow 2s infinite alternate;
-}
-
-@keyframes glow{
-    from{text-shadow:0 0 10px #fff;}
-    to{text-shadow:0 0 25px #ffd6e0;}
+    text-shadow:0 0 15px rgba(0,0,0,0.3);
 }
 
 h2{
     font-weight:400;
     margin-top:10px;
+    text-shadow:0 0 10px rgba(0,0,0,0.3);
 }
 
 button{
@@ -72,12 +78,6 @@ button:hover{
     border-radius:20px;
     margin:10px;
     box-shadow:0 10px 20px rgba(0,0,0,0.3);
-    animation:bounce 2s infinite;
-}
-
-@keyframes bounce{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-10px);}
 }
 
 .heart{
@@ -85,6 +85,7 @@ button:hover{
     bottom:-20px;
     font-size:24px;
     animation:float 6s linear infinite;
+    z-index:1;
 }
 
 @keyframes float{
@@ -92,11 +93,11 @@ button:hover{
     to{transform:translateY(-110vh);opacity:0;}
 }
 
-canvas{
-    position:fixed;
-    top:0;
-    left:0;
-    pointer-events:none;
+.love-text{
+    font-size:22px;
+    line-height:1.7;
+    margin-top:30px;
+    text-shadow:0 0 15px rgba(0,0,0,0.4);
 }
 </style>
 </head>
@@ -118,7 +119,7 @@ canvas{
             <img src="bubu.jpeg">
         </div>
 
-        <p style="font-size:22px;line-height:1.7; margin-top:30px;">
+        <div class="love-text">
         Out of all the people in this world,<br>
         my heart chose you.<br>
         Not once. Not twice.<br>
@@ -126,7 +127,7 @@ canvas{
         Happy Valentine's Day, Bubu 🥰<br>
         Forever Yours,<br>
         Dudu ❤️
-        </p>
+        </div>
     </div>
 </div>
 
@@ -138,7 +139,6 @@ canvas{
 function showLove(){
     document.getElementById("surprise").style.display="block";
     document.getElementById("bgMusic").play();
-    launchFireworks();
 }
 
 function createHeart(){
@@ -149,24 +149,24 @@ function createHeart(){
     document.body.appendChild(heart);
     setTimeout(()=>{heart.remove();},6000);
 }
-setInterval(createHeart,500);
+setInterval(createHeart,700);
 
+// Soft Pink Fireflies Instead of White Dots
 const canvas=document.getElementById("fireworks");
 const ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
-function launchFireworks(){
-    for(let i=0;i<150;i++){
-        let x=Math.random()*canvas.width;
-        let y=Math.random()*canvas.height/2;
-        ctx.beginPath();
-        ctx.arc(x,y,3,0,2*Math.PI);
-        ctx.fillStyle="white";
-        ctx.fill();
-    }
+let particles=[];
+for(let i=0;i<60;i++){
+    particles.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        radius:Math.random()*3,
+        speed:Math.random()*0.5+0.2
+    });
 }
-</script>
 
-</body>
-</html>
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="rgba(255,182
